@@ -62,26 +62,35 @@ p "result quick_sort---> #{example}"
 
 
 # HeapSort
-def heap_sort arr, first
-
-  max_index = arr.size/2 + 1
-  j = 0
-  for i in first..max_index
-    if (!arr[2*i -1].nil? && arr[i-1] < arr[2*i-1])
-      arr[i-1], arr[2*i-1] = arr[2*i-1], arr[i-1]
-      j = 2*i-1
+def heap_sort arr, last_el_pos
+  if last_el_pos > 0
+     def order_heap father_index, arr, last_el_pos
+        largest_i = father_index
+        left_i = 2*father_index + 1
+        right_i = 2*father_index + 2
+        if (left_i <= last_el_pos && arr[largest_i] < arr[left_i])
+          largest_i = left_i
+        end
+        if (right_i <= last_el_pos && arr[largest_i] < arr[right_i])   
+          largest_i = right_i
+        end
+        if largest_i != father_index
+          arr[largest_i], arr[father_index] = arr[father_index], arr[largest_i] 
+          order_heap largest_i, arr, last_el_pos
+        end
     end
-    if (!arr[2*i].nil? && arr[i-1] < arr[2*i])   
-      arr[i-1], arr[2*i] = arr[2*i], arr[i-1]
-      j = 2*i
-    end 
+    n = last_el_pos + 1
+    last_father_index = n/2-1 #index of the father of the last element of the arry
+      
+    while last_father_index >= 0  do
+      order_heap last_father_index, arr, last_el_pos
+      last_father_index -= 1
+    end
+    arr[last_el_pos], arr[0] = arr[0], arr[last_el_pos]
+    last_el_pos-=1    
+    heap_sort(arr, last_el_pos)
   end
-  p j
-  p arr
-  arr[first-1], arr[j] = arr[j], arr[first-1] 
-  heap_sort(arr, first+1) if first < max_index
-
 end
-example = [23,4,38,6,0,12]
-heap_sort example, 1
+example = [12,23,4,15,6,0, 9,38]
+heap_sort example, example.size-1 
 p "result heap_sort---> #{example}"
