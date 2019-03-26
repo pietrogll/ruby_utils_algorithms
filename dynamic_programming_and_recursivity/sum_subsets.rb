@@ -1,5 +1,5 @@
 
-SET = [1,2,3,4,9,10]
+SET = [1,3,2,16,8,4,9,10]
 SUM = 16
 
 #Backtracking recursive approach
@@ -45,11 +45,13 @@ end
 puts backtracking_calculator()
 
 #Recursive approach
-def calculator_mem(arr=SET, sum=SUM)
+def calculator_mem(arr=SET, sum=SUM, mem = {})
 	return 1 if (sum == 0)
 	return 0 if (sum <0 || (arr.size == 0 && sum > 0))
+	key = "#{arr.length.to_s}:#{sum.to_s}"
+	return mem[key] if !mem[key].nil?
 	complementary_sum = sum - arr.last
 	popped_arr = arr.take(arr.size-1)
-	calculator_mem(popped_arr, complementary_sum) +  calculator_mem(popped_arr, sum)
+	mem[key] = calculator_mem(popped_arr, complementary_sum, mem) +  calculator_mem(popped_arr, sum, mem)
 end
 puts calculator_mem()
