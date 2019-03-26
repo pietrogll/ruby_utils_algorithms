@@ -40,17 +40,18 @@ def longest_subsequence_length arr
 end
 
 example = [0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15, 14, 18]
-p longest_subsequence_length(example)
+p "The size and the subsequance are: #{longest_subsequence_length(example)}"
 
 
 # Other approach O(nlogn)
  
 def binary_search store, i=0, j=store.size, el
 	mid = (i+j) / 2
+	mid += 1 if mid == 0
 	if store[mid].last >= el and store[mid-1].last<=el
-		return mid-1
+		return mid
 	elsif store[mid].last > el
-		binary_search store, i, mid, el
+		binary_search store, i, mid-1, el
 	else
 		binary_search store, mid, j, el
 	end
@@ -61,21 +62,19 @@ def ls arr
 	store[0] = [arr[0]]
 	max_length = 1
 	arr.each do |el|
-		store[0] = [el] if el < store[0].last
-		if el > (store.last).last
-			p "el: #{el}"
-			p "---> #{store[0, store.length].last}"
+		if el < store[0].last
+			store[0] = [el] 
+		elsif el > (store.last).last
 			store[store.length] = (store.last.clone).push(el)
-			p "store: #{store}"
 		elsif el < (store.last).last
-			store_index = binary_search(store, el)
-			p "store_index: #{store_index}"
-			store = store[0, store_index + 1] + store[store_index + 1].clone.push(el) + store[store_index+1, store.size]
-			p "store: #{store}"
+			inserting_index = binary_search(store, el)
+			store[inserting_index] = store[inserting_index-1].clone.push(el)
 		end 
 	end
-	p store
+	p "================================================================="
+	p "final store: #{store}"
+	[store.size, store.last]
 end
 
 example = [0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15, 14, 18]
-ls(example)
+p "The size and the subsequance are: #{ls(example)}"
