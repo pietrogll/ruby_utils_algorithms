@@ -2,11 +2,11 @@
 
 #Dynamic programming / O(n^2)
 
-def calculate_longest_length_for arr, final_index, length, indexes
-	for j in 0..final_index
-		if arr[j] < arr[final_index] and length[final_index] < length[j]+1
-			length[final_index] = length[j] + 1
-			indexes[final_index] = j
+def calculate_longest_length_for arr, last_pos_of_arr, max_sequence_lengths, indexes
+	for j in 0..last_pos_of_arr
+		if arr[j] < arr[last_pos_of_arr] and max_sequence_lengths[last_pos_of_arr] < max_sequence_lengths[j]+1
+			max_sequence_lengths[last_pos_of_arr] = max_sequence_lengths[j] + 1
+			indexes[last_pos_of_arr] = j
 		end 
 	end
 end
@@ -22,16 +22,16 @@ def extract_sequence_from indexes, arr, max_i
 end
 
 def longest_subsequence_length arr
-	length = []
+	max_sequence_lengths = []
 	indexes = []
 	indexes[0] = 0
 	max = 1
 	max_i = 0
 	for i in 0..arr.size-1
-		length[i] = 1
-		calculate_longest_length_for arr, i, length, indexes
-		if max < length[i]
-			max = length[i] 
+		max_sequence_lengths[i] = 1
+		calculate_longest_length_for arr, i, max_sequence_lengths, indexes
+		if max < max_sequence_lengths[i]
+			max = max_sequence_lengths[i] 
 			max_i = i
 		end
 	end
