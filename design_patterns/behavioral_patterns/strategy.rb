@@ -1,6 +1,6 @@
 # The strategy pattern (also known as the policy pattern) is a behavioral design pattern that enables selecting an algorithm at runtime. Instead of implementing a single algorithm directly, code receives run-time instructions as to which in a family of algorithms to use. Strategy lets the algorithm vary independently from clients that use it.
 
-#It is about inject specific behaviour for defining object of the same class that behaves differently event if having the same interface
+#It is about inject specific behaviour for defining object of the same class that behaves differently even if having the same interface
 
 class Duck 
 
