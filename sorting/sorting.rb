@@ -1,4 +1,7 @@
+#STABILITY OF A SORTING ALGORITM: A sortign algorithm is stable if mantains the relative position of two equal elements.
+
 # MergeSort
+#Time complexity: O(NlogN)
 def merge_sort arr
   if arr.size > 1
     mid = arr.size / 2
@@ -35,13 +38,17 @@ def merge_sort arr
 
   end
 end
-example = [23,4,38,6,0,12]
+example = [23, 4, 38, 6, 0, 12]
 merge_sort example
 p "result merge_sort---> #{example}"
 
 
 # QuickSort
+#Time complexity: Best case scenario O(NlogN) / Worst case scenario O(N^2)
+# Best for small arrays
+# Not stable
 def quick_sort arr, first, last
+  return arr if last <= first
   pivot = arr[last]
   j = first
 
@@ -52,16 +59,16 @@ def quick_sort arr, first, last
     end
   end
   arr[j], arr[last] = arr[last], arr[j]
-  quick_sort(arr, first, j-1) if first < j-1
-  quick_sort(arr, j+1, last) if j+1 < last
-
+  quick_sort(arr, first, j-1)
+  quick_sort(arr, j+1, last)
 end
-example = [23,4,38,6,0,12]
-quick_sort example, 0, example.size-1 
-p "result quick_sort---> #{example}"
+example = [4, 1, 78, 23, 4, 38, 6, 0, 12]
+p "result quick_sort---> #{quick_sort(example, 0, example.size-1)}"
 
 
 # HeapSort
+# Time complexity: O(NlogN)
+# Not stable
 def heap_sort arr, last_el_pos
   if last_el_pos > 0
      def order_heap father_index, arr, last_el_pos
@@ -76,7 +83,6 @@ def heap_sort arr, last_el_pos
         end
         if largest_i != father_index
           arr[largest_i], arr[father_index] = arr[father_index], arr[largest_i] 
-          order_heap largest_i, arr, last_el_pos
         end
     end
     n = last_el_pos + 1
@@ -91,6 +97,6 @@ def heap_sort arr, last_el_pos
     heap_sort(arr, last_el_pos)
   end
 end
-example = [12,23,4,15,6,0, 9,38]
+example = [1, 56, 7, 7, 12, 23, 4, 15, 6, 0, 9, 38]
 heap_sort example, example.size-1 
 p "result heap_sort---> #{example}"
