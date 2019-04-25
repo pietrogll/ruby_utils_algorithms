@@ -12,6 +12,7 @@ def find_longest arr
   for i in 0..arr.size-1
 
     check = false
+    new_seqs = []
     sequences.each{ |sequence|
       seq_check = false
       j = sequence.size-1
@@ -21,7 +22,7 @@ def find_longest arr
             sequence.push(arr[i]) 
           else
             new_seq = sequence[0, j+1]+[arr[i]]
-            sequences.push(new_seq)
+            new_seqs.push(new_seq)
           end
           check = true
           seq_check = true
@@ -29,6 +30,7 @@ def find_longest arr
         j-=1
       end
     }
+    sequences += new_seqs
     if !check
       sequences.push([arr[i]])
     end
