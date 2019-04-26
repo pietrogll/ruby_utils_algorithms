@@ -6,21 +6,22 @@
 
 #If such an integer exists then print Yes otherwise print No.
 
-def divider sorted_arr, i=0, j=sorted_arr.size-1
+def divider sorted_arr, i=0, j=sorted_arr.size-1, left_sum = 0, right_sum = 0
+
 	
 	return 'No' if j<=i
 	
-	right_sum = sorted_arr[j]
-	left_sum = sorted_arr[i]
+	right_sum += sorted_arr[j]
+
 	while left_sum < right_sum
-		i +=1
 		left_sum += sorted_arr[i]
+		i +=1
 	end
 	if left_sum == right_sum
-		return 'Yes' if( sorted_arr[i+1] == sorted_arr[j-1] || (i+1 == j && sorted_arr[i]+1<sorted_arr[j]))
+		return 'Yes' if( sorted_arr[i] == sorted_arr[j-1] || (i == j && sorted_arr[i-1]+1<sorted_arr[j]))  	
 	end
 
-  divider(sorted_arr, i+1, j-1)
+	divider(sorted_arr, i, j-1, left_sum, right_sum)
 
 end
 
@@ -32,3 +33,6 @@ p divider [2,1,2,2,2,4,5].sort
 
 p divider [2,1,2,2,4,5].sort
 # --> No
+
+p divider [1,1,1,2,2,2,2,4,5,6]
+# --> Yes
